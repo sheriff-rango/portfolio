@@ -619,6 +619,48 @@ progress {
   height: 48px;
 }
 
+.list-inline-card {
+  display: inline-block;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.list-inline-card:not(:last-child) {
+  margin-right: 0.5rem;
+}
+.list-inline-card img {
+  width: 100%;
+  height: 300px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+.list-inline-card h3 {
+    margin: 10px 0;
+}
+
+.list-inline-card p {
+    font-size: 14px;
+}
+
+.list-inline-card a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #35424a;
+    background: #5C8BF7;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.list-inline-card a:hover {
+    background: #4b76d7;
+}
+
 .initialism {
   font-size: 0.875em;
   text-transform: uppercase;
@@ -11308,7 +11350,7 @@ section.resume-section {
   padding-right: 1rem;
   padding-top: 5rem;
   padding-bottom: 5rem;
-  max-width: 75rem;
+  max-width: 90rem;
 }
 section.resume-section .resume-section-content {
   width: 100%;
