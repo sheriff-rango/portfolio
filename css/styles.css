@@ -11369,3 +11369,33 @@ section.resume-section .resume-section-content {
     padding-bottom: 5rem;
   }
 }
+
+.bg-white {
+  background: white;
+}
+
+.fg-white {
+  color: white;
+}
+
+.divider-custom {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.divider-custom .divider-custom-line {
+    width: 25%;
+    height: 2px;
+}
+.divider-custom .divider-custom-line:first-child {
+    margin-right: 1rem;
+}
+.divider-custom .divider-custom-line:last-child {
+    margin-left: 1rem;
+}
+.divider-custom .divider-custom-icon {
+    color: white !important;
+    font-size: 2rem;
+}
