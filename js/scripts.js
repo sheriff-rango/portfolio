@@ -52,6 +52,19 @@ function resetError(event) {
     messageElement.classList.remove("form-control-invalid");
 }
 
+function resetForm(event) {
+    resetError(event);
+    const nameElement = event.target.name;
+    const emailElement = event.target.email;
+    const phoneElement = event.target.phone;
+    const messageElement = event.target.message;
+
+    nameElement.value = "";
+    emailElement.value = "";
+    phoneElement.value = "";
+    messageElement.value = "";
+}
+
 function sendEmail(event) {
     event.preventDefault()
     // console.log('element', event, event.target)
@@ -59,6 +72,8 @@ function sendEmail(event) {
     const emailElement = event.target.email;
     const phoneElement = event.target.phone;
     const messageElement = event.target.message;
+    const buttonElement = event.target.submit;
+    console.log('button element', buttonElement)
 
     const name = nameElement.value.trim();
     const email = emailElement.value.trim();
@@ -76,7 +91,6 @@ function sendEmail(event) {
         hasError = true;
         emailElement.classList.add("form-control-invalid");
         emailElement.nextElementSibling.textContent = "Please enter your email!"
-
     }
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -113,13 +127,20 @@ function sendEmail(event) {
         return
     };
 
-    console.log('hereerererererer', { name, email, phone, message })
+    const statusElement = buttonElement.nextElementSibling;
+    statusElement.textContent = "Submitting...";
+    statusElement.style.color = "rgb(192,152,83)";
     emailjs.send('service_rrb3ima', 'template_l7qenfz', { name, email, phone, message }).then(
         (response) => {
             console.log('SUCCESS!', response.status, response.text);
+            statusElement.textContent = "Successfully submitted!";
+            statusElement.style.color = "rgb(70,136,71)";
+            resetForm(event);
         },
         (error) => {
             console.log('FAILED...', error);
+            statusElement.textContent = "Failed!";
+            statusElement.style.color = "rgb(185,74,72)";
         },
     )
 }

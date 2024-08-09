@@ -11414,3 +11414,8 @@ a.email {
   height: 20px;
   color: red;
 }
+
+.form-result {
+  display: block;
+  height: 20px;
+}
