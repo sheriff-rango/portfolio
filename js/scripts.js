@@ -46,11 +46,15 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
-    // Initialize EmailJS with the Public Key
+    const phoneElement = document.getElementById("phone");
+    const mask = IMask(phoneElement, {
+        mask: '+1 (000) 000-0000',
+    });
+    console.log('debug mask', mask)
 });
 
 function resetError() {
-    // console.log('debug reset error', event)
+    console.log('debug reset error')
 
     for (let key in statusElements) {
         const statusElement = statusElements[key];
@@ -125,8 +129,13 @@ function sendEmail(event) {
     }
 
     if (phone) {
-        // const parsedPhone = libphonenumber.parsePhoneNumber(phone);
-        // console.log('debug phone number validation', parsedPhone);
+        const phoneRegExp = /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/;
+        const validPhoneNumber = phoneRegExp.test(phone);
+        if (!validPhoneNumber) {
+            hasError = true;
+            phoneElement.classList.add("form-control-invalid");
+            statusElements.phone.textContent = "Please enter valid phone number!"
+        }
     }
 
     if (!message) {
