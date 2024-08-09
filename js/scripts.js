@@ -7,6 +7,21 @@
 // Scripts
 // 
 
+let formElements = {
+    name: null,
+    email: null,
+    phone: null,
+    message: null
+}
+
+let statusElements = {
+    name: null,
+    email: null,
+    phone: null,
+    message: null,
+    button: null,
+}
+
 window.addEventListener('DOMContentLoaded', event => {
 
     // Activate Bootstrap scrollspy on the main nav element
@@ -34,35 +49,30 @@ window.addEventListener('DOMContentLoaded', event => {
     // Initialize EmailJS with the Public Key
 });
 
-function resetError(event) {
+function resetError() {
     // console.log('debug reset error', event)
-    const nameElement = event.target.name;
-    const emailElement = event.target.email;
-    const phoneElement = event.target.phone;
-    const messageElement = event.target.message;
 
-    nameElement.nextElementSibling.textContent = ""
-    emailElement.nextElementSibling.textContent = ""
-    phoneElement.nextElementSibling.textContent = ""
-    messageElement.nextElementSibling.textContent = ""
-
-    nameElement.classList.remove("form-control-invalid");
-    emailElement.classList.remove("form-control-invalid");
-    phoneElement.classList.remove("form-control-invalid");
-    messageElement.classList.remove("form-control-invalid");
+    for (let key in statusElements) {
+        const statusElement = statusElements[key];
+        const formElement = formElements[key];
+        if (statusElement) {
+            statusElement.textContent = "";
+        }
+        if (formElement) {
+            formElement.classList.remove("form-control-invalid");
+        }
+    }
 }
 
-function resetForm(event) {
-    resetError(event);
-    const nameElement = event.target.name;
-    const emailElement = event.target.email;
-    const phoneElement = event.target.phone;
-    const messageElement = event.target.message;
+function resetForm() {
+    resetError();
 
-    nameElement.value = "";
-    emailElement.value = "";
-    phoneElement.value = "";
-    messageElement.value = "";
+    for (let key in formElements) {
+        const element = formElements[key];
+        if (element) {
+            element.value = "";
+        }
+    }
 }
 
 function sendEmail(event) {
@@ -73,7 +83,21 @@ function sendEmail(event) {
     const phoneElement = event.target.phone;
     const messageElement = event.target.message;
     const buttonElement = event.target.submit;
-    console.log('button element', buttonElement)
+
+    formElements = {
+        name: nameElement,
+        email: emailElement,
+        phone: phoneElement,
+        message: messageElement
+    };
+
+    statusElements = {
+        name: nameElement.nextElementSibling,
+        email: emailElement.nextElementSibling,
+        phone: phoneElement.nextElementSibling,
+        message: messageElement.nextElementSibling,
+        button: buttonElement.nextElementSibling,
+    };
 
     const name = nameElement.value.trim();
     const email = emailElement.value.trim();
@@ -84,21 +108,20 @@ function sendEmail(event) {
     if (!name) {
         hasError = true;
         nameElement.classList.add("form-control-invalid");
-        nameElement.nextElementSibling.textContent = "Please enter your name!"
+        statusElements.name.textContent = "Please enter your name!"
     }
 
     if (!email) {
         hasError = true;
         emailElement.classList.add("form-control-invalid");
-        emailElement.nextElementSibling.textContent = "Please enter your email!"
+        statusElements.email.textContent = "Please enter your email!"
     }
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
         hasError = true;
         emailElement.classList.add("form-control-invalid");
-        emailElement.nextElementSibling.textContent = "Invalid email address!"
-
+        statusElements.email.textContent = "Invalid email address!"
     }
 
     if (phone) {
@@ -109,20 +132,12 @@ function sendEmail(event) {
     if (!message) {
         hasError = true;
         messageElement.classList.add("form-control-invalid");
-        messageElement.nextElementSibling.textContent = "Please enter your message!"
+        statusElements.message.textContent = "Please enter your message!"
     }
 
     if (hasError) {
         setTimeout(() => {
-            nameElement.nextElementSibling.textContent = ""
-            emailElement.nextElementSibling.textContent = ""
-            phoneElement.nextElementSibling.textContent = ""
-            messageElement.nextElementSibling.textContent = ""
-
-            nameElement.classList.remove("form-control-invalid");
-            emailElement.classList.remove("form-control-invalid");
-            phoneElement.classList.remove("form-control-invalid");
-            messageElement.classList.remove("form-control-invalid");
+            resetError();
         }, 5000)
         return
     };
@@ -135,7 +150,7 @@ function sendEmail(event) {
             console.log('SUCCESS!', response.status, response.text);
             statusElement.textContent = "Successfully submitted!";
             statusElement.style.color = "rgb(70,136,71)";
-            resetForm(event);
+            resetForm();
         },
         (error) => {
             console.log('FAILED...', error);
