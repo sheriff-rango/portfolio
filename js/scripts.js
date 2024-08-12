@@ -23,7 +23,6 @@ let statusElements = {
 }
 
 window.addEventListener('DOMContentLoaded', event => {
-
     // Activate Bootstrap scrollspy on the main nav element
     const sideNav = document.body.querySelector('#sideNav');
     if (sideNav) {
@@ -47,15 +46,12 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
     const phoneElement = document.getElementById("phone");
-    const mask = IMask(phoneElement, {
+    IMask(phoneElement, {
         mask: '+1 (000) 000-0000',
     });
-    console.log('debug mask', mask)
 });
 
 function resetError() {
-    console.log('debug reset error')
-
     for (let key in statusElements) {
         const statusElement = statusElements[key];
         const formElement = formElements[key];
