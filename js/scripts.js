@@ -150,7 +150,7 @@ function sendEmail(event) {
     const statusElement = buttonElement.nextElementSibling;
     statusElement.textContent = "Submitting...";
     statusElement.style.color = "rgb(192,152,83)";
-    emailjs.send('service_rrb3ima', 'template_l7qenfz', { name, email, phone, message }).then(
+    emailjs.send('service_rrb3ima', 'template_fzbif7u', { name, email, phone, message }).then(
         (response) => {
             console.log('SUCCESS!', response.status, response.text);
             statusElement.textContent = "Successfully submitted!";
